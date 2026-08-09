@@ -1,0 +1,284 @@
+{
+  "name": "Marvin - Assistente Inteligente de Logística",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1488,
+        0
+      ],
+      "id": "d1bb9493-8e42-42d2-b8d9-bf31350862a1",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "fileSelector": "/files/*.pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        -1280,
+        0
+      ],
+      "id": "3a8cf43f-73fc-4080-a001-32e38835e8ce",
+      "name": "Read/Write Files from Disk"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "marvin-kb",
+          "mode": "list",
+          "cachedResultName": "marvin-kb"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.3,
+      "position": [
+        -1072,
+        0
+      ],
+      "id": "712ff38e-0c67-4a29-8101-91fe6ca26017",
+      "name": "Qdrant Vector Store",
+      "credentials": {
+        "qdrantApi": {
+          "id": "x3NdJpcqEhFUCT3f",
+          "name": "Qdrant account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -1152,
+        240
+      ],
+      "id": "bdecfe5b-6133-4283-b8d2-12b3ee0212c0",
+      "name": "Embeddings Google Gemini",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "OTMP3JtXlhSnXzqZ",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataType": "binary",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        -912,
+        224
+      ],
+      "id": "714a5b58-8ee2-4310-bd78-512d8bdcd1c0",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -544,
+        -16
+      ],
+      "id": "46a8af33-2162-42f6-91c3-f661576e911b",
+      "name": "When chat message received",
+      "webhookId": "3344a779-b5ab-412a-ae64-7fb38db19240"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You areVocê é o Marvin, assistente virtual da Marvin Logistics.\n\nSua função é responder perguntas relacionadas aos serviços e procedimentos da empresa utilizando exclusivamente as informações disponíveis na base de conhecimento da Marvin Logistics.\n\nREGRAS:\n\n- Consulte a base de conhecimento antes de responder perguntas relacionadas à Marvin Logistics.\n- Responda somente com informações encontradas na documentação recuperada.\n- Não invente informações, políticas, prazos, valores ou procedimentos.\n- Não utilize conhecimento externo para complementar informações que não estejam disponíveis na documentação.\n- Se a informação solicitada não estiver disponível na base de conhecimento, informe claramente que não encontrou essa informação na documentação da Marvin Logistics.\n- Se a pergunta não estiver relacionada aos assuntos da Marvin Logistics, explique educadamente que você só pode responder questões relacionadas aos serviços e procedimentos da empresa.\n- Responda sempre em português.\n- Utilize linguagem clara, objetiva e profissional.\n- Quando apropriado, organize a resposta em tópicos para facilitar a leitura.\n\nA base de conhecimento contém informações sobre:\n- envios;\n- rastreamento de pedidos;\n- reembolsos e sinistros;\n- perguntas frequentes;\n- reclamações e atendimento ao cliente.\n\nNão mencione detalhes técnicos como Qdrant, embeddings, RAG, banco vetorial ou ferramentas internas ao usuário. a helpful assistant"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -320,
+        -16
+      ],
+      "id": "bfcab072-490f-429a-afa5-c8211fc0e025",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        -272,
+        176
+      ],
+      "id": "90db421d-6d0b-4676-86b3-30c9d4bd5841",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "OTMP3JtXlhSnXzqZ",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Consulte esta ferramenta para buscar informações na base de conhecimento da Marvin Logistics sobre envios, rastreamento de pedidos, reembolsos, sinistros, perguntas frequentes, reclamações e atendimento ao cliente. Use as informações recuperadas para responder às perguntas do usuário.",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "marvin-kb",
+          "mode": "list",
+          "cachedResultName": "marvin-kb"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.3,
+      "position": [
+        -96,
+        176
+      ],
+      "id": "ba81abd0-4ed3-4902-b5d1-fed8d1855328",
+      "name": "Qdrant Vector Store1",
+      "credentials": {
+        "qdrantApi": {
+          "id": "x3NdJpcqEhFUCT3f",
+          "name": "Qdrant account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        336,
+        288
+      ],
+      "id": "89dd0079-a79a-4844-a7e9-92c69f1a617b",
+      "name": "Embeddings Google Gemini1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "OTMP3JtXlhSnXzqZ",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read/Write Files from Disk": {
+      "main": [
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qdrant Vector Store1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Qdrant Vector Store1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "67b77cde-8588-43ac-9078-1aa727825deb",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f244824493b6cc7ba903329d4e36505a709ca9d6b69be801e43a4abfb4101e99"
+  },
+  "nodeGroups": [],
+  "id": "n1K9yZs6SKPKJycY",
+  "tags": []
+}
