@@ -1,0 +1,28 @@
+services:
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: marvin-qdrant
+    ports:
+      - "7333:6333"
+      - "7334:6334"
+    volumes:
+      - qdrant_storage:/qdrant/storage
+
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: marvin-n8n
+    ports:
+      - "6678:5678"
+    environment:
+      - GENERIC_TIMEZONE=America/Sao_Paulo
+      - TZ=America/Sao_Paulo
+      - N8N_RESTRICT_FILE_ACCESS_TO=/files
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ./documentos/pdf:/files:ro
+    depends_on:
+      - qdrant
+
+volumes:
+  qdrant_storage:
+  n8n_data:
