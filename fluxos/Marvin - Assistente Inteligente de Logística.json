@@ -6,10 +6,10 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -1488,
-        0
+        -864,
+        16
       ],
-      "id": "d1bb9493-8e42-42d2-b8d9-bf31350862a1",
+      "id": "3b84dad1-96ce-44ad-8317-6b558d5dc809",
       "name": "When clicking ‘Execute workflow’"
     },
     {
@@ -20,10 +20,10 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1.1,
       "position": [
-        -1280,
-        0
+        -656,
+        16
       ],
-      "id": "3a8cf43f-73fc-4080-a001-32e38835e8ce",
+      "id": "f9d7dc21-08d7-4897-8e2f-c0008e9a4cd7",
       "name": "Read/Write Files from Disk"
     },
     {
@@ -40,14 +40,14 @@
       "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
       "typeVersion": 1.3,
       "position": [
-        -1072,
-        0
+        -448,
+        16
       ],
-      "id": "712ff38e-0c67-4a29-8101-91fe6ca26017",
+      "id": "0e39ae4a-2f7a-4a28-9267-42f3716e8e1a",
       "name": "Qdrant Vector Store",
       "credentials": {
         "qdrantApi": {
-          "id": "x3NdJpcqEhFUCT3f",
+          "id": "1UY89eiSD2AIauVj",
           "name": "Qdrant account"
         }
       }
@@ -57,14 +57,14 @@
       "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
       "typeVersion": 1,
       "position": [
-        -1152,
-        240
+        -528,
+        256
       ],
-      "id": "bdecfe5b-6133-4283-b8d2-12b3ee0212c0",
+      "id": "869b59db-d1fb-4495-be8a-bc969b615134",
       "name": "Embeddings Google Gemini",
       "credentials": {
         "googlePalmApi": {
-          "id": "OTMP3JtXlhSnXzqZ",
+          "id": "iwjSEmkDBuUaE6VP",
           "name": "Google Gemini(PaLM) Api account"
         }
       }
@@ -77,10 +77,10 @@
       "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
       "typeVersion": 1.1,
       "position": [
-        -912,
-        224
+        -288,
+        240
       ],
-      "id": "714a5b58-8ee2-4310-bd78-512d8bdcd1c0",
+      "id": "b84d7d53-440f-4ac1-b9e1-2e5e3dde6268",
       "name": "Default Data Loader"
     },
     {
@@ -90,17 +90,17 @@
       "type": "@n8n/n8n-nodes-langchain.chatTrigger",
       "typeVersion": 1.4,
       "position": [
-        -624,
-        -16
+        0,
+        0
       ],
-      "id": "46a8af33-2162-42f6-91c3-f661576e911b",
+      "id": "e17bc3ae-40fe-4afb-a30a-b78cb406f01c",
       "name": "When chat message received",
       "webhookId": "3344a779-b5ab-412a-ae64-7fb38db19240"
     },
     {
       "parameters": {
         "promptType": "define",
-        "text": "={{ $json.message.text }}",
+        "text": "={{ $json.message?.text || $json.chatInput }}",
         "options": {
           "systemMessage": "Você é o Marvin, assistente virtual da Marvin Logistics.\n\nSua função é responder perguntas sobre os serviços e procedimentos da empresa utilizando exclusivamente as informações disponíveis na base de conhecimento da Marvin Logistics.\n\nREGRAS:\n\n- Para perguntas relacionadas à Marvin Logistics, consulte a base de conhecimento antes de responder.\n- Utilize somente as informações recuperadas da documentação para formular a resposta.\n- Não invente informações, políticas, prazos, valores ou procedimentos.\n- Não utilize conhecimento externo para complementar informações ausentes.\n- Faça buscas adicionais na base somente quando a primeira consulta não fornecer informações suficientes para responder.\n- Se a informação solicitada não estiver disponível na documentação, informe claramente que ela não foi encontrada na base de conhecimento da Marvin Logistics.\n- Se a pergunta não estiver relacionada aos assuntos da Marvin Logistics, informe educadamente que você só pode responder questões relacionadas aos serviços e procedimentos da empresa.\n- Responda sempre em português.\n- Utilize linguagem clara, objetiva e profissional.\n- Quando apropriado, organize a resposta em tópicos para facilitar a leitura.\n- Apresente-se como Marvin apenas no início de uma nova conversa ou quando o usuário perguntar quem você é.\n- Não repita sua apresentação em todas as respostas.\n\nA base de conhecimento contém informações sobre:\n- envios;\n- rastreamento de pedidos;\n- reembolsos e sinistros;\n- perguntas frequentes;\n- reclamações e atendimento ao cliente.\n\nNão mencione ao usuário detalhes técnicos como Qdrant, embeddings, RAG, banco vetorial, modelos de linguagem ou ferramentas internas."
         }
@@ -108,10 +108,10 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        -320,
-        -16
+        304,
+        0
       ],
-      "id": "bfcab072-490f-429a-afa5-c8211fc0e025",
+      "id": "63fee5eb-41d9-479b-a5be-d107efa9314a",
       "name": "AI Agent"
     },
     {
@@ -121,14 +121,14 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1.1,
       "position": [
-        -384,
-        176
+        240,
+        192
       ],
-      "id": "90db421d-6d0b-4676-86b3-30c9d4bd5841",
+      "id": "f415762a-a33d-4d40-b99d-1d7cfedcfc51",
       "name": "Google Gemini Chat Model",
       "credentials": {
         "googlePalmApi": {
-          "id": "OTMP3JtXlhSnXzqZ",
+          "id": "iwjSEmkDBuUaE6VP",
           "name": "Google Gemini(PaLM) Api account"
         }
       }
@@ -148,14 +148,14 @@
       "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
       "typeVersion": 1.3,
       "position": [
-        -48,
-        224
+        576,
+        240
       ],
-      "id": "ba81abd0-4ed3-4902-b5d1-fed8d1855328",
+      "id": "0f56d93e-3c47-4ec2-963f-98e7e39e148a",
       "name": "Qdrant Vector Store1",
       "credentials": {
         "qdrantApi": {
-          "id": "x3NdJpcqEhFUCT3f",
+          "id": "1UY89eiSD2AIauVj",
           "name": "Qdrant account"
         }
       }
@@ -165,14 +165,14 @@
       "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
       "typeVersion": 1,
       "position": [
-        144,
-        400
+        768,
+        416
       ],
-      "id": "89dd0079-a79a-4844-a7e9-92c69f1a617b",
+      "id": "73df88fd-ac50-4da5-8663-f9309f23abbd",
       "name": "Embeddings Google Gemini1",
       "credentials": {
         "googlePalmApi": {
-          "id": "OTMP3JtXlhSnXzqZ",
+          "id": "iwjSEmkDBuUaE6VP",
           "name": "Google Gemini(PaLM) Api account"
         }
       }
@@ -187,15 +187,15 @@
       "type": "n8n-nodes-base.telegramTrigger",
       "typeVersion": 1.4,
       "position": [
-        -608,
-        176
+        16,
+        192
       ],
-      "id": "a51a81df-0301-4ed4-8c35-a430912aace9",
+      "id": "80c882e5-056a-4efc-b3ad-f6f14e67dfe3",
       "name": "Telegram Trigger",
       "webhookId": "aa763e62-50aa-48f0-b4f8-c700f6b5a9e6",
       "credentials": {
         "telegramApi": {
-          "id": "dDmv7he1hxGCdtLW",
+          "id": "ycRdO1MHq2vomqkp",
           "name": "Telegram account"
         }
       }
@@ -203,21 +203,21 @@
     {
       "parameters": {
         "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
-        "text": "={{ $json.output }}",
+        "text": "={{ $json.output.replace(/\\*\\*/g, '').replace(/\\*/g, '').replace(/_/g, '') }}",
         "additionalFields": {}
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        32,
-        -16
+        656,
+        0
       ],
-      "id": "dfb362e2-a312-450e-ba6a-97a6cdaac69f",
+      "id": "e26b2484-e39e-4723-91e2-f45a06d97689",
       "name": "Send a text message",
       "webhookId": "3085b558-2ae4-4b20-bffc-ae2fdf570725",
       "credentials": {
         "telegramApi": {
-          "id": "dDmv7he1hxGCdtLW",
+          "id": "ycRdO1MHq2vomqkp",
           "name": "Telegram account"
         }
       }
@@ -267,11 +267,6 @@
             "index": 0
           }
         ]
-      ]
-    },
-    "When chat message received": {
-      "main": [
-        []
       ]
     },
     "Google Gemini Chat Model": {
@@ -328,20 +323,31 @@
           }
         ]
       ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
-  "active": false,
+  "active": true,
   "settings": {
     "executionOrder": "v1",
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "1935c7de-0e33-400c-9bd1-1b694ab3ad32",
+  "versionId": "a2f063fa-5b67-475a-be65-838f5b140720",
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "f244824493b6cc7ba903329d4e36505a709ca9d6b69be801e43a4abfb4101e99"
+    "instanceId": "8e2f184e615ffebe6b4aebf4eca33fbe3b79464ddfb4b675fc995c0e0297503d"
   },
   "nodeGroups": [],
-  "id": "n1K9yZs6SKPKJycY",
+  "id": "RWEcWhVIUDoAy8vF",
   "tags": []
 }
